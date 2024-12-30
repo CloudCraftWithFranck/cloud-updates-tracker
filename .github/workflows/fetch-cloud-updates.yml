@@ -35,8 +35,8 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git fetch origin main
-          git reset --soft origin/main # Reset to the latest origin/main to avoid conflicts
+          git fetch origin main # Fetch latest changes from remote
+          git reset --soft origin/main # Align local branch with remote
           git add cloud-updates.md
           git commit -m "Update Cloud Updates [skip ci]" || echo "No changes to commit"
-          git push origin main
+          git push --force-with-lease origin main # Force push safely
