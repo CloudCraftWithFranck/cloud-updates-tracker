@@ -26,8 +26,8 @@ def write_to_markdown(updates):
             file.write(f"## {provider}\n")
             for entry in entries:
                 file.write(f"- [{entry['title']}]({entry['link']})\n")
-            file.write("\n")
-    print("Updates written to 'cloud-updates.md'") 
+            file.write("\n---\n\n")  # Adds a separator between providers
+    print("Updates written to 'cloud-updates.md'")
 
 if __name__ == "__main__":
     updates = fetch_updates()
