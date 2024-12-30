@@ -33,8 +33,9 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git pull origin main --rebase --strategy-option=theirs # Automatically resolve conflicts
+          git fetch origin main
+          git rebase origin/main # Rebase the local branch on top of the remote
           git add cloud-updates.md
           git commit -m "Update Cloud Updates [skip ci]" || echo "No changes to commit"
-          git push origin main
+          git push --force-with-lease origin main
 
