@@ -1,0 +1,35 @@
+name: Fetch Cloud Updates
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs daily at 6 AM UTC
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  fetch-updates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install feedparser
+
+      - name: Fetch Cloud Updates
+        run: python scripts/fetch_cloud_updates.py
+
+      - name: Commit and Push Updates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add cloud-updates.md
+          git commit -m "Update Cloud Updates [skip ci]"
+          git push
